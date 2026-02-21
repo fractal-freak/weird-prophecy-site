@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kevin Soares | Astrology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link rel="preload" as="font" href="https://fonts.gstatic.com/s/pirataone/v23/I_urMpiDvgLdLh0fAtofhi-Org.woff2" type="font/woff2" crossorigin="">
+<style>
+  @font-face {
+    font-family: 'Pirata One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url('https://fonts.gstatic.com/s/pirataone/v23/I_urMpiDvgLdLh0fAtofhi-Org.woff2') format('woff2');
+  }
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&family=JetBrains+Mono:wght@300;400&display=swap');
+</style>
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg-dark: #e8e0d0;
+    --ink: #1a1612;
+    --ink-light: #4a4238;
+    --ink-faded: #8a7e70;
+    --accent: #c44b28;
+    --accent-dark: #a03d20;
+    --parchment: #ede6d8;
+    --border: #c4b89a;
+    --cream: #faf6ee;
+    --shadow: rgba(26, 22, 18, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    background: rgba(245, 240, 232, 0.85);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.4s ease;
+  }
+
+  nav.scrolled {
+    padding: 0.8rem 2.5rem;
+    box-shadow: 0 2px 20px var(--shadow);
+  }
+
+  .nav-brand {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .nav-brand span {
+    font-style: normal;
+    color: var(--ink);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.2rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.65rem !important;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bg) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #fff !important;
+  }
+
+  .nav-cta::after { display: none !important; }
+
+  /* ── MOBILE NAV ── */
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 28px;
+    height: 20px;
+    position: relative;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--ink);
+    position: absolute;
+    left: 0;
+    transition: all 0.3s;
+  }
+
+  .nav-toggle span:nth-child(1) { top: 0; }
+  .nav-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+  .nav-toggle span:nth-child(3) { bottom: 0; }
+
+  .nav-toggle.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2) { opacity: 0; }
+  .nav-toggle.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(196, 75, 40, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--ink-faded);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 1rem 2.2rem;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.4s;
+  }
+
+  .hero-cta:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(196, 75, 40, 0.2);
+  }
+
+  .hero-cta svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s;
+  }
+
+  .hero-cta:hover svg { transform: translateX(3px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ink-faded);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    animation: bobDown 2s ease-in-out infinite;
+  }
+
+  @keyframes bobDown {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 2rem;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--ink-faded);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    max-width: 1100px;
+    margin: 0 auto;
+    border: none;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+
+  .divider::after {
+    content: '✦';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    padding: 0 1rem;
+    color: var(--border);
+    font-size: 0.7rem;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .about-image-wrapper {
+    position: relative;
+  }
+
+  .about-image {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    filter: grayscale(20%) contrast(1.05);
+    border: 1px solid var(--border);
+  }
+
+  .about-image-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: -12px;
+    bottom: -12px;
+    border: 1px solid var(--border);
+    z-index: -1;
+  }
+
+  .about-text p {
+    margin-bottom: 1.2rem;
+    color: var(--ink-light);
+    font-size: 0.95rem;
+  }
+
+  .about-text p:first-of-type::first-letter {
+    font-family: 'Pirata One', cursive;
+    font-size: 3.5rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.4rem;
+    margin-top: 0.1rem;
+    color: var(--accent);
+  }
+
+  .about-credentials {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .credential {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faded);
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--border);
+    background: var(--cream);
+  }
+
+  /* ── SERVICES ── */
+  .services-section { background: var(--bg-dark); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: all 0.4s;
+    cursor: default;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px var(--shadow);
+    border-color: var(--accent);
+  }
+
+  .service-number {
+    font-family: 'Pirata One', cursive;
+    font-size: 3rem;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1.2rem;
+    transition: color 0.3s;
+  }
+
+  .service-card:hover .service-number { color: var(--accent); }
+
+  .service-card h3 {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .service-card p {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-faded);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .service-tag .arrow {
+    font-size: 1rem;
+    color: var(--accent);
+    transition: transform 0.3s;
+  }
+
+  .service-card:hover .service-tag .arrow { transform: translateX(4px); }
+
+  /* ── CONTENT FEED (YouTube + Substack) ── */
+  .feed-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .feed-column h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faded);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .feed-item {
+    display: block;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.3s;
+  }
+
+  .feed-item:hover { padding-left: 0.8rem; }
+
+  .feed-item-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faded);
+    margin-bottom: 0.3rem;
+  }
+
+  .feed-item-title {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    transition: color 0.3s;
+  }
+
+  .feed-item:hover .feed-item-title { color: var(--accent); }
+
+  .feed-item-desc {
+    font-size: 0.82rem;
+    color: var(--ink-faded);
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .feed-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+
+  .feed-more:hover { gap: 0.8rem; }
+
+  /* ── TESTIMONIAL STRIP ── */
+  .testimonial-section {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-section::before {
+    content: '"';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Pirata One', cursive;
+    font-size: 15rem;
+    color: rgba(245, 240, 232, 0.04);
+    pointer-events: none;
+  }
+
+  .testimonial-quote {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.5;
+    color: var(--parchment);
+  }
+
+  .testimonial-attr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faded);
+  }
+
+  /* ── BOOKING ── */
+  .booking-section {
+    background: var(--parchment);
+    text-align: center;
+    padding: 7rem 2rem;
+    position: relative;
+  }
+
+  .booking-section .section-label { justify-content: center; }
+  .booking-section .section-label::before { display: none; }
+
+  .booking-text {
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    color: var(--ink-light);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .booking-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 1.2rem 3rem;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    transition: all 0.4s;
+  }
+
+  .booking-cta:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(196, 75, 40, 0.25);
+  }
+
+  .booking-methods {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .booking-method {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faded);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .booking-method svg { width: 14px; height: 14px; color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 4rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .footer-brand {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-desc {
+    font-size: 0.82rem;
+    color: var(--ink-faded);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faded);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col a {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--parchment);
+    text-decoration: none;
+    margin-bottom: 0.6rem;
+    transition: color 0.3s;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(196, 184, 154, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-socials a {
+    color: var(--ink-faded);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-socials a:hover { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── STORE ── */
+  .store-section { background: var(--bg); }
+
+  .store-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 5rem;
+    margin-top: 3.5rem;
+    align-items: start;
+  }
+
+  /* Slideshow */
+  .store-slideshow {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #111;
+  }
+
+  .store-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .store-slide.active {
+    opacity: 1;
+  }
+
+  .store-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .store-slide-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s;
+    backdrop-filter: blur(4px);
+  }
+
+  .store-slide-arrow:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .store-slide-arrow.prev { left: 1rem; }
+  .store-slide-arrow.next { right: 1rem; }
+
+  .store-slide-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 2;
+  }
+
+  .store-slide-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .store-slide-dot.active {
+    background: #fff;
+  }
+
+  /* Purchase panel */
+  .store-panel {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .store-panel h3 {
+    font-family: 'Pirata One', cursive;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+
+  .store-panel-desc {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    line-height: 1.75;
+    margin-bottom: 2.2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .store-buy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 1rem 2.2rem;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.4s;
+  }
+
+  .store-buy-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(196, 75, 40, 0.2);
+  }
+
+  .store-buy-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s;
+  }
+
+  .store-buy-btn:hover svg { transform: translateX(3px); }
+
+  @media (max-width: 1000px) {
+    .store-layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .store-panel { position: static; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      gap: 1.2rem;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .about-image-wrapper { max-width: 400px; }
+
+    .services-grid { grid-template-columns: 1fr; }
+
+    .feed-grid { grid-template-columns: 1fr; }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.2rem; }
+    section { padding: 4rem 1.2rem; }
+    .hero { padding: 7rem 1.2rem 3rem; }
+    .booking-section { padding: 5rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav id="nav" class="scrolled">
+  <a href="#home" class="nav-brand">Kevin <span>Soares</span></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#writings">Writings</a></li>
+    <li><a href="store.html">Store</a></li>
+    <li><a href="#booking" class="nav-cta">Book a Reading</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero" id="home">
+  <!-- Animated star logo -->
+  <canvas id="heroStar" width="140" height="140" style="width:70px;height:70px;margin-bottom:2rem;"></canvas>
+
+  <div class="hero-label">Hellenistic Astrology · Research-Driven Practice</div>
+
+  <h1>Navigate time<br>with <em>ancient</em><br>precision</h1>
+
+  <p class="hero-sub">
+    I'm Kevin Soares, an astrologer working in the Hellenistic tradition. I make concrete predictions with specific timing, helping you find the right moment to act.
+  </p>
+
+  <a href="#booking" class="hero-cta">
+    Book a Consultation
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+  </a>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"></path></svg>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">About the Astrologer</div>
+    <h2 class="section-title fade-up">Rigorous tradition,<br><em>practical</em> application</h2>
+
+    <div class="about-grid">
+      <div class="about-image-wrapper fade-up">
+        <!-- Add your photo: <img src="your-photo.jpg" alt="Kevin Soares" class="about-image"> -->
+      </div>
+
+      <div class="about-text fade-up">
+        <p>For years I've studied the oldest systematic methods of chart interpretation, the techniques of Valens, Dorotheus, and the Hellenistic masters who built astrology's foundational logic. My work is research-driven and historically grounded. When I read a chart, I'm drawing from the same tradition that once advised kings and timed the founding of cities.</p>
+
+        <p>Rather than dealing in vague affirmations, I offer concrete predictions with specific timing, the kind of astrology that can actually be tested and measured. Every reading is rooted in technique, backed by research, and delivered with the clarity you need to make real decisions.</p>
+
+        <p>When I'm not reading charts, I'm producing research content for my YouTube channel and Substack, correlating daily world events with planetary transits, and building tools that push the practice forward.</p>
+
+        <div class="about-credentials">
+          <span class="credential">Hellenistic Tradition</span>
+          <span class="credential">Natal · Horary · Electional</span>
+          <span class="credential">Research-Led Practice</span>
+          <span class="credential">Kevin Soares Astrology</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════ SERVICES ═══════ -->
+<section class="services-section" id="services">
+  <div class="section-inner">
+    <div class="section-label">What I Offer</div>
+    <h2 class="section-title fade-up">Three branches of<br><em>ancient</em> technique</h2>
+
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-number">I</div>
+        <h3>Unlocking the Nativity</h3>
+        <p>A deep reading of your birth chart through the lens of Hellenistic astrology. I walk you through the planetary patterns active at your birth, the gifts, the tensions, and the optimal methods through which they find expression. Rather than personality typing, I provide a technical map of your life's terrain.</p>
+        <div class="service-tag">
+          <span>Natal Chart Reading</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-number">II</div>
+        <h3>Horary Consultation</h3>
+        <p>Got a pressing question? Horary astrology casts a chart for the moment the question is asked and reads the answer directly from the sky. Relationships, career moves, lost items, decisions you can't make. The chart speaks clearly if you know how to listen. Concrete answers, not riddles.</p>
+        <div class="service-tag">
+          <span>Question-Based Reading</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-number">III</div>
+        <h3>Electional Astrology</h3>
+        <p>Timing is everything. Electional astrology selects the most auspicious moment for your important ventures. Launching a business, signing a contract, starting a project. Together we'll find the window where the planets align with your intentions, giving your actions the strongest possible footing.</p>
+        <div class="service-tag">
+          <span>Strategic Timing</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TESTIMONIAL ═══════ -->
+<section class="testimonial-section">
+  <div class="section-inner fade-up">
+    <p class="testimonial-quote">Kevin's understanding and knowledge of astrology is felt and embodied. You can tell the language flows through him naturally, showcasing his absolute love for the art. His chart delineations are precise, highlighting natural supports that exist within your natal chart. Kevin is also sensitive to the current moment, distilling transits in an understandable and workable way. He is going to be one of the greats and has become one of my go-to astrologers!</p>
+    <p class="testimonial-attr">— Alex</p>
+  </div>
+</section>
+
+<!-- ═══════ WRITINGS & CONTENT ═══════ -->
+<section id="writings">
+  <div class="section-inner">
+    <div class="section-label">Research &amp; Content</div>
+    <h2 class="section-title fade-up">The forecast from<br><em>Weird Prophecy</em></h2>
+
+    <div class="feed-grid">
+      <!-- YOUTUBE COLUMN -->
+      <div class="feed-column fade-up">
+        <h3>☉ YouTube</h3>
+        <div id="yt-feed"><div style="color:var(--ink-faded);font-size:0.82rem;">Loading videos… <a href="https://www.youtube.com/@weirdprophecy" target="_blank" style="color:var(--accent);">Visit the channel</a></div></div>
+        <a href="https://www.youtube.com/@weirdprophecy" target="_blank" class="feed-more">
+          View all videos <span>→</span>
+        </a>
+      </div>
+
+      <!-- SUBSTACK COLUMN -->
+      <div class="feed-column fade-up">
+        <h3>☽ Substack</h3>
+
+        <a href="https://fractalfreak.substack.com/p/purification-by-fire-mercury-and" target="_blank" class="feed-item">
+          <div class="feed-item-date">March 2024</div>
+          <div class="feed-item-title">Purification by Fire: Mercury &amp; Chiron</div>
+          <div class="feed-item-desc">When Chiron wounds resurface, it's natural for our thoughts to drift towards the injustices that led us here. On courage, alignment, and acting in accordance with your own spirit.</div>
+        </a>
+
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+          <!-- Replace the src below with your Substack embed URL from your Substack dashboard → Settings → Basics → Embed -->
+          <iframe src="https://fractalfreak.substack.com/embed" width="100%" height="180" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+        <a href="https://fractalfreak.substack.com/" target="_blank" class="feed-more">
+          Read all posts <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════ STORE ═══════ -->
+<section class="store-section" id="store">
+  <div class="section-inner">
+    <div class="section-label">Sacred Texts</div>
+    <h2 class="section-title fade-up">The <em>Pocket Guide</em><br>to the Planets</h2>
+
+    <div class="store-layout fade-up">
+
+      <!-- SLIDESHOW -->
+      <div class="store-slideshow">
+        <div class="store-slide active">
+          <!-- Add product images: <img src="product-1.jpg" alt="Pocket Guide cover"> -->
+        </div>
+        <div class="store-slide">
+          <!-- <img src="product-2.jpg" alt="Pocket Guide interior"> -->
+        </div>
+        <div class="store-slide">
+          <!-- <img src="product-3.jpg" alt="Pocket Guide detail"> -->
+        </div>
+
+        <button class="store-slide-arrow prev" onclick="slideshowNav(-1)" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+        </button>
+        <button class="store-slide-arrow next" onclick="slideshowNav(1)" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+        </button>
+
+        <div class="store-slide-dots">
+          <div class="store-slide-dot active" onclick="slideshowGo(0)"></div>
+          <div class="store-slide-dot" onclick="slideshowGo(1)"></div>
+          <div class="store-slide-dot" onclick="slideshowGo(2)"></div>
+        </div>
+      </div>
+
+      <!-- PURCHASE PANEL -->
+      <div class="store-panel">
+        <h3>A Guide to Working with the Planets</h3>
+        <p class="store-panel-desc">The astrologer's pocket guide to building sacred space, one sphere at a time. Complete with an introduction to all seven traditional planets and their correspondences.</p>
+
+        <a href="store.html" class="store-buy-btn">
+          Enter Space
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════ BOOKING ═══════ -->
+<section class="booking-section" id="booking">
+  <div class="section-inner">
+    <div class="section-label">Begin</div>
+    <h2 class="section-title fade-up">Ready to read<br><em>the sky?</em></h2>
+    <p class="booking-text fade-up">
+      Every consultation begins with your question. Whether you need to understand your birth chart, find the right time to act, or get a direct answer from the heavens, I'll bring the full weight of the tradition to bear on your situation.
+    </p>
+    <a href="https://kevinsoares.as.me/" target="_blank" class="booking-cta fade-up">
+      Schedule Your Consultation
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+    </a>
+    <div class="booking-methods fade-up">
+      <div class="booking-method">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+        Zoom Session
+      </div>
+      <div class="booking-method">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+        60–90 Minutes
+      </div>
+      <div class="booking-method">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 110 20 10 10 0 010-20zM2 12h20"></path><path d="M12 2a15 15 0 014 10 15 15 0 01-4 10 15 15 0 01-4-10A15 15 0 0112 2z"></path></svg>
+        Worldwide
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Kevin Soares</div>
+      <p class="footer-desc">Research-driven astrology in the Hellenistic tradition. Concrete predictions, specific timing, ancient precision.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#writings">Writings</a>
+      <a href="store.html">Store</a>
+      <a href="#booking">Book a Reading</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.youtube.com/@weirdprophecy" target="_blank">YouTube</a>
+      <a href="https://fractalfreak.substack.com/" target="_blank">Substack</a>
+      <a href="https://www.instagram.com/fractal_freak/" target="_blank">Instagram</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Kevin Soares · Astrology</span>
+    <div class="footer-socials">
+      <a href="https://www.youtube.com/@weirdprophecy" target="_blank">YT</a>
+      <a href="https://fractalfreak.substack.com/" target="_blank">SS</a>
+      <a href="https://www.instagram.com/fractal_freak/" target="_blank">IG</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Animated star logo ──
+  (function() {
+    const starImg = new Image();
+    starImg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAU8AAAFvCAYAAADKYUnEAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAAXI0lEQVR4nO3bebAmVX3G8WdkAmhcj3jEo4JrFLECbiGhTDRxiUk0iRKXgClBURNZZBQRERMVFEhAUMRSjDAGUdQIWIZUIiKFgYAgrqBACAygPdhCwygTFoHJH/3OcLnzLr3/uvt8P1VTA/d2n34ch+ce291vtwRAwbuDgncfts4BAIMRvDsqeLdh8mtf6zwYhhXWAQBLwbvPSdpj2ZePT9Jsf4s8GA7KE1EL3m1Y/rUkzfjvAgs9wDoA0DPnWQfAMFCeiNa0WaekF3QeBIO00joA0CPXSHqgdQgMAzNPRCl4d8GULz9J0uldZ8EwUZ6I1a4zvr5tpykwWFxVRJRmnO/kSjsKY+aJ6ATvZt3D+d1Og2DQKE/E6PAZX2fWicIoT8Tolhlff1SnKTBolCeiErx7r6TtZnz7ji6zYNgoT8TmZXO+t2VnKTB4lCdisx8tpAAADHNJREFUeJxjYBgFgx8AAIQAAQoAAA==";
+    starImg.onload = function() {
+      const canvas = document.getElementById('heroStar');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const SIZE = 140;
+      const drawW = SIZE * 0.85, drawH = SIZE * 0.85;
+      const drawX = (SIZE - drawW) / 2, drawY = (SIZE - drawH) / 2;
+
+      const off = document.createElement('canvas');
+      off.width = SIZE; off.height = SIZE;
+      const offCtx = off.getContext('2d');
+      offCtx.drawImage(starImg, drawX, drawY, drawW, drawH);
+      const fullData = offCtx.getImageData(0, 0, SIZE, SIZE);
+
+      let sumX = 0, sumY = 0, count = 0;
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          if (fullData.data[(y * SIZE + x) * 4 + 3] > 30) { sumX += x; sumY += y; count++; }
+        }
+      }
+      const cx = sumX / count, cy = sumY / count;
+
+      const pixels = [];
+      let maxDist = 0;
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          const a = fullData.data[(y * SIZE + x) * 4 + 3];
+          if (a > 30) {
+            const dist = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
+            pixels.push({ x, y, dist });
+            if (dist > maxDist) maxDist = dist;
+          }
+        }
+      }
+
+      const numSteps = 5;
+      const stepFrames = [];
+      for (let i = 0; i <= numSteps; i++) {
+        const threshold = maxDist * (1 - i / numSteps);
+        const frameData = ctx.createImageData(SIZE, SIZE);
+        for (const p of pixels) {
+          if (p.dist <= threshold) {
+            const idx = (p.y * SIZE + p.x) * 4;
+            frameData.data[idx]     = fullData.data[idx];
+            frameData.data[idx + 1] = fullData.data[idx + 1];
+            frameData.data[idx + 2] = fullData.data[idx + 2];
+            frameData.data[idx + 3] = fullData.data[idx + 3];
+          }
+        }
+        stepFrames.push(frameData);
+      }
+
+      const stepMs = 50;
+      const holdVisibleMs = 700;
+      const holdGoneMs = 120;
+      const frames = [];
+      const holdVis = Math.round(holdVisibleMs / stepMs);
+      for (let i = 0; i < holdVis; i++) frames.push(0);
+      for (let i = 1; i <= numSteps; i++) frames.push(i);
+      const holdG = Math.round(holdGoneMs / stepMs);
+      for (let i = 0; i < holdG; i++) frames.push(numSteps);
+      for (let i = numSteps - 1; i >= 0; i--) frames.push(i);
+
+      const totalFrames = frames.length;
+      let currentFrame = 0, lastTime = 0;
+
+      function draw(timestamp) {
+        if (timestamp - lastTime >= stepMs) {
+          lastTime = timestamp;
+          ctx.clearRect(0, 0, SIZE, SIZE);
+          const fi = frames[currentFrame % totalFrames];
+          if (fi < numSteps) {
+            ctx.putImageData(stepFrames[fi], 0, 0);
+          }
+          currentFrame++;
+        }
+        requestAnimationFrame(draw);
+      }
+      requestAnimationFrame(draw);
+    };
+  })();
+
+  // ── Load YouTube feed via RSS ──
+  (function() {
+    const CHANNEL_ID = 'UCiETlq0DUWhGyOFs6kZp0gA';
+    const container = document.getElementById('yt-feed');
+    const rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+    const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl) + '&count=3';
+
+    fetch(apiUrl)
+      .then(r => r.json())
+      .then(data => {
+        if (data.status !== 'ok' || !data.items || !data.items.length) {
+          container.innerHTML = '<div style="color:var(--ink-faded);font-size:0.82rem;">Could not load videos. <a href="https://www.youtube.com/@weirdprophecy" target="_blank" style="color:var(--accent);">Visit the channel</a></div>';
+          return;
+        }
+        container.innerHTML = '';
+        data.items.slice(0, 3).forEach(item => {
+          const date = new Date(item.pubDate);
+          const dateStr = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+          const tmp = document.createElement('div');
+          tmp.innerHTML = item.description || '';
+          const desc = tmp.textContent.substring(0, 120) + (tmp.textContent.length > 120 ? '...' : '');
+          const a = document.createElement('a');
+          a.href = item.link;
+          a.target = '_blank';
+          a.className = 'feed-item';
+          a.innerHTML =
+            '<div class="feed-item-date">' + dateStr + '</div>' +
+            '<div class="feed-item-title">' + item.title + '</div>' +
+            (desc ? '<div class="feed-item-desc">' + desc + '</div>' : '');
+          container.appendChild(a);
+        });
+      })
+      .catch(() => {
+        container.innerHTML = '<div style="color:var(--ink-faded);font-size:0.82rem;">Could not load videos. <a href="https://www.youtube.com/@weirdprophecy" target="_blank" style="color:var(--accent);">Visit the channel</a></div>';
+      });
+  })();
+
+  // ── Nav scroll effect ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ── Mobile nav toggle ──
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('active');
+    links.classList.toggle('open');
+  });
+
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      toggle.classList.remove('active');
+      links.classList.remove('open');
+    });
+  });
+
+  // ── Fade-up on scroll ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── Smooth scroll for anchor links ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ── Slideshow ──
+  let slideIdx = 0;
+  function slideshowGo(n) {
+    const slides = document.querySelectorAll('.store-slide');
+    const dots   = document.querySelectorAll('.store-slide-dot');
+    slides[slideIdx].classList.remove('active');
+    dots[slideIdx].classList.remove('active');
+    slideIdx = ((n % slides.length) + slides.length) % slides.length;
+    slides[slideIdx].classList.add('active');
+    dots[slideIdx].classList.add('active');
+  }
+  function slideshowNav(dir) { slideshowGo(slideIdx + dir); }
+</script>
+
+</body></html>

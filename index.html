@@ -202,6 +202,12 @@
     pointer-events: none;
   }
 
+  .hero-star {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 2rem;
+  }
+
   .hero-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem;
@@ -970,7 +976,7 @@
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" id="home">
   <!-- Animated star logo -->
-  <canvas id="heroStar" width="140" height="140" style="width:70px;height:70px;margin-bottom:2rem;"></canvas>
+  <img src="star-twinkle.gif" alt="Weird Prophecy star" class="hero-star">
 
   <div class="hero-label">Hellenistic Astrology · Research-Driven Practice</div>
 
@@ -1099,7 +1105,6 @@
         </a>
 
         <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
-          <!-- Replace the src below with your Substack embed URL from your Substack dashboard → Settings → Basics → Embed -->
           <iframe src="https://fractalfreak.substack.com/embed" width="100%" height="180" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
         </div>
 
@@ -1229,92 +1234,6 @@
 </footer>
 
 <script>
-  // ── Animated star logo ──
-  (function() {
-    const starImg = new Image();
-    starImg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAU8AAAFvCAYAAADKYUnEAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAAXI0lEQVR4nO3bebAmVX3G8WdkAmhcj3jEo4JrFLECbiGhTDRxiUk0iRKXgClBURNZZBQRERMVFEhAUMRSjDAGUdQIWIZUIiKFgYAgrqBACAygPdhCwygTFoHJH/3OcLnzLr3/uvt8P1VTA/d2n34ch+ce291vtwRAwbuDgncfts4BAIMRvDsqeLdh8mtf6zwYhhXWAQBLwbvPSdpj2ZePT9Jsf4s8GA7KE1EL3m1Y/rUkzfjvAgs9wDoA0DPnWQfAMFCeiNa0WaekF3QeBIO00joA0CPXSHqgdQgMAzNPRCl4d8GULz9J0uldZ8EwUZ6I1a4zvr5tpykwWFxVRJRmnO/kSjsKY+aJ6ATvZt3D+d1Og2DQKE/E6PAZX2fWicIoT8Tolhlff1SnKTBolCeiErx7r6TtZnz7ji6zYNgoT8TmZXO+t2VnKTB4lCdisx8tpAAADHNJREFUeJxjYBgFgx8AAIQAAQoAAA==";
-    starImg.onload = function() {
-      const canvas = document.getElementById('heroStar');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const SIZE = 140;
-      const drawW = SIZE * 0.85, drawH = SIZE * 0.85;
-      const drawX = (SIZE - drawW) / 2, drawY = (SIZE - drawH) / 2;
-
-      const off = document.createElement('canvas');
-      off.width = SIZE; off.height = SIZE;
-      const offCtx = off.getContext('2d');
-      offCtx.drawImage(starImg, drawX, drawY, drawW, drawH);
-      const fullData = offCtx.getImageData(0, 0, SIZE, SIZE);
-
-      let sumX = 0, sumY = 0, count = 0;
-      for (let y = 0; y < SIZE; y++) {
-        for (let x = 0; x < SIZE; x++) {
-          if (fullData.data[(y * SIZE + x) * 4 + 3] > 30) { sumX += x; sumY += y; count++; }
-        }
-      }
-      const cx = sumX / count, cy = sumY / count;
-
-      const pixels = [];
-      let maxDist = 0;
-      for (let y = 0; y < SIZE; y++) {
-        for (let x = 0; x < SIZE; x++) {
-          const a = fullData.data[(y * SIZE + x) * 4 + 3];
-          if (a > 30) {
-            const dist = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
-            pixels.push({ x, y, dist });
-            if (dist > maxDist) maxDist = dist;
-          }
-        }
-      }
-
-      const numSteps = 5;
-      const stepFrames = [];
-      for (let i = 0; i <= numSteps; i++) {
-        const threshold = maxDist * (1 - i / numSteps);
-        const frameData = ctx.createImageData(SIZE, SIZE);
-        for (const p of pixels) {
-          if (p.dist <= threshold) {
-            const idx = (p.y * SIZE + p.x) * 4;
-            frameData.data[idx]     = fullData.data[idx];
-            frameData.data[idx + 1] = fullData.data[idx + 1];
-            frameData.data[idx + 2] = fullData.data[idx + 2];
-            frameData.data[idx + 3] = fullData.data[idx + 3];
-          }
-        }
-        stepFrames.push(frameData);
-      }
-
-      const stepMs = 50;
-      const holdVisibleMs = 700;
-      const holdGoneMs = 120;
-      const frames = [];
-      const holdVis = Math.round(holdVisibleMs / stepMs);
-      for (let i = 0; i < holdVis; i++) frames.push(0);
-      for (let i = 1; i <= numSteps; i++) frames.push(i);
-      const holdG = Math.round(holdGoneMs / stepMs);
-      for (let i = 0; i < holdG; i++) frames.push(numSteps);
-      for (let i = numSteps - 1; i >= 0; i--) frames.push(i);
-
-      const totalFrames = frames.length;
-      let currentFrame = 0, lastTime = 0;
-
-      function draw(timestamp) {
-        if (timestamp - lastTime >= stepMs) {
-          lastTime = timestamp;
-          ctx.clearRect(0, 0, SIZE, SIZE);
-          const fi = frames[currentFrame % totalFrames];
-          if (fi < numSteps) {
-            ctx.putImageData(stepFrames[fi], 0, 0);
-          }
-          currentFrame++;
-        }
-        requestAnimationFrame(draw);
-      }
-      requestAnimationFrame(draw);
-    };
-  })();
-
   // ── Load YouTube feed via RSS ──
   (function() {
     const CHANNEL_ID = 'UCiETlq0DUWhGyOFs6kZp0gA';

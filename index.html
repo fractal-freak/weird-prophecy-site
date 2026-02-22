@@ -436,14 +436,14 @@
     margin-top: 3rem;
   }
 
-  .service-card {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    padding: 2.5rem 2rem;
-    position: relative;
-    transition: all 0.4s;
-    cursor: default;
-  }
+.service-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+  position: relative;
+  transition: all 0.4s;
+  cursor: pointer; /* added */
+}
 
   .service-card:hover {
     transform: translateY(-4px);
@@ -1037,16 +1037,28 @@
     <div class="section-label">What I Offer</div>
     <h2 class="section-title fade-up">Three branches of<br><em>ancient</em> technique</h2>
 
-    <div class="services-grid">
-      <div class="service-card fade-up">
-        <div class="service-number">I</div>
-        <h3>Unlocking the Nativity</h3>
-        <p>A deep reading of your birth chart through the lens of Hellenistic astrology. I walk you through the planetary patterns active at your birth, the gifts, the tensions, and the optimal methods through which they find expression. Rather than personality typing, I provide a technical map of your life's terrain.</p>
-        <div class="service-tag">
-          <span>Natal Chart Reading</span>
-          <span class="arrow">→</span>
-        </div>
-      </div>
+<div class="services-grid">
+
+  <a href="https://kevinsoares.as.me/astrologyconsultation"
+     target="_blank"
+     class="service-card fade-up"
+     style="text-decoration:none; color:inherit;">
+
+    <div class="service-number">I</div>
+    <h3>Unlocking the Nativity</h3>
+    <p>
+      A deep reading of your birth chart through the lens of Hellenistic astrology.
+      I walk you through the planetary patterns active at your birth, the gifts,
+      the tensions, and the optimal methods through which they find expression.
+      Rather than personality typing, I provide a technical map of your life's terrain.
+    </p>
+
+    <div class="service-tag">
+      <span>Natal Chart Reading</span>
+      <span class="arrow">→</span>
+    </div>
+
+  </a>
 
       <div class="service-card fade-up">
         <div class="service-number">II</div>

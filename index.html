@@ -1129,7 +1129,17 @@
       <!-- YOUTUBE COLUMN -->
       <div class="feed-column fade-up">
         <h3>☉ YouTube</h3>
-        <div id="yt-feed"><div style="color:var(--ink-faded);font-size:0.82rem;">Loading videos… <a href="https://www.youtube.com/@weirdprophecy" target="_blank" style="color:var(--accent);">Visit the channel</a></div></div>
+        <div style="border:1px solid var(--border); background:var(--cream); padding:0.75rem;">
+  <iframe
+    width="100%"
+    height="315"
+    src="https://www.youtube.com/embed?listType=playlist&list=UUiETlq0DUWhGyOFs6kZp0gA"
+    title="Weird Prophecy uploads"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
         <a href="https://www.youtube.com/@weirdprophecy" target="_blank" class="feed-more">
           View all videos <span>→</span>
         </a>
@@ -1278,43 +1288,6 @@
 </footer>
 
 <script>
-  // ── Load YouTube feed via RSS ──
-  (function() {
-    const CHANNEL_ID = 'UCiETlq0DUWhGyOFs6kZp0gA';
-    const container = document.getElementById('yt-feed');
-    const rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
-    const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl) + '&count=3';
-
-    fetch(apiUrl)
-      .then(r => r.json())
-      .then(data => {
-        if (data.status !== 'ok' || !data.items || !data.items.length) {
-          container.innerHTML = '<div style="color:var(--ink-faded);font-size:0.82rem;">Could not load videos. <a href="https://www.youtube.com/@weirdprophecy" target="_blank" style="color:var(--accent);">Visit the channel</a></div>';
-          return;
-        }
-        container.innerHTML = '';
-        data.items.slice(0, 3).forEach(item => {
-          const date = new Date(item.pubDate);
-          const dateStr = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-          const tmp = document.createElement('div');
-          tmp.innerHTML = item.description || '';
-          const desc = tmp.textContent.substring(0, 120) + (tmp.textContent.length > 120 ? '...' : '');
-          const a = document.createElement('a');
-          a.href = item.link;
-          a.target = '_blank';
-          a.className = 'feed-item';
-          a.innerHTML =
-            '<div class="feed-item-date">' + dateStr + '</div>' +
-            '<div class="feed-item-title">' + item.title + '</div>' +
-            (desc ? '<div class="feed-item-desc">' + desc + '</div>' : '');
-          container.appendChild(a);
-        });
-      })
-      .catch(() => {
-        container.innerHTML = '<div style="color:var(--ink-faded);font-size:0.82rem;">Could not load videos. <a href="https://www.youtube.com/@weirdprophecy" target="_blank" style="color:var(--accent);">Visit the channel</a></div>';
-      });
-  })();
-
   // ── Nav scroll effect ──
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {

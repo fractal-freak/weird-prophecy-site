@@ -593,18 +593,19 @@
 
 .testimonial-quote {
   font-family: 'DM Sans', sans-serif;   /* match About section text */
-  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-size: 0.95rem;                  /* match .about-text p */
   font-style: italic;
   max-width: 700px;
   margin: 0 auto 1.5rem;
-  line-height: 1.5;
+  line-height: 1.7;                    /* match site body / about feel */
   color: var(--parchment);
 }
 
 .testimonial-attr {
-  font-family: 'Pirata One', cursive;   /* match old testimonial font */
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
+  font-family: 'Pirata One', cursive;  /* same font as old quote */
+  font-size: 0.9rem;
+  text-transform: uppercase;           /* <-- uppercase */
+  letter-spacing: 0.12em;
   color: var(--ink-faded);
 }
 

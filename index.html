@@ -630,6 +630,103 @@
   color: var(--ink-faded);
 }
 
+/* ── TESTIMONIAL CAROUSEL ── */
+.testimonial-carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  gap: 1.25rem;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.testimonial-viewport {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-track {
+  position: relative;
+}
+
+.testimonial-slide {
+  display: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.testimonial-slide.is-active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.testimonial-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 240, 232, 0.25);
+  background: rgba(245, 240, 232, 0.06);
+  color: var(--bg);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  line-height: 1;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.testimonial-arrow:hover {
+  transform: translateY(-1px);
+  background: rgba(245, 240, 232, 0.12);
+  border-color: rgba(245, 240, 232, 0.35);
+}
+
+.testimonial-arrow:active {
+  transform: translateY(0);
+}
+
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.testimonial-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 240, 232, 0.35);
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.testimonial-dot.is-active {
+  background: rgba(245, 240, 232, 0.65);
+  opacity: 1;
+}
+
+.testimonial-dot:hover {
+  transform: scale(1.12);
+}
+
+@media (max-width: 600px) {
+  .testimonial-carousel {
+    grid-template-columns: 36px 1fr 36px;
+    gap: 0.75rem;
+  }
+  .testimonial-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.4rem;
+  }
+}
+
   /* ── BOOKING ── */
   .booking-section {
     background: var(--parchment);
@@ -1044,7 +1141,7 @@
 
         <p>Rather than dealing in vague affirmations, I offer concrete predictions with specific timing, the kind of astrology that can actually be tested and measured. Every reading is rooted in technique, backed by research, and delivered with the clarity you need to make real&nbsp;decisions.</p>
 
-        <p>When I'm not reading charts, I'm producing research content for my YouTube channel and Substack, correlating daily world events with planetary transits, and discovering new methods which push my practice forward.</p>
+        <p>When I'm not reading charts, I'm producing research content for my YouTube channel and Substack, correlating daily world events with planetary transits, and deepening my relationship to the planetary spheres.</p>
 
         <div class="about-credentials">
           <span class="credential">Natal · Horary · Electional</span>
@@ -1133,11 +1230,42 @@
   </div>
 </section>
 
-<!-- ═══════ TESTIMONIAL ═══════ -->
+<!-- ═══════ TESTIMONIALS (Carousel) ═══════ -->
 <section class="testimonial-section">
   <div class="section-inner fade-up">
-    <p class="testimonial-quote">Kevin's understanding and knowledge of astrology is felt and embodied. You can tell the language flows through him naturally, showcasing his absolute love for the art. His chart delineations are precise, highlighting natural supports that exist within your natal chart. Kevin is also sensitive to the current moment, distilling transits in an understandable and workable way. He is going to be one of the greats and has become one of my go-to&nbsp;astrologers!</p>
-    <p class="testimonial-attr">— Alex</p>
+
+    <div class="testimonial-carousel" id="testimonialCarousel" aria-roledescription="carousel">
+      <button class="testimonial-arrow prev" type="button" aria-label="Previous testimonial">‹</button>
+
+      <div class="testimonial-viewport">
+        <div class="testimonial-track">
+
+          <!-- Slide 1 -->
+          <div class="testimonial-slide is-active">
+            <p class="testimonial-quote">Kevin's understanding and knowledge of astrology is felt and embodied. You can tell the language flows through him naturally, showcasing his absolute love for the art. His chart delineations are precise, highlighting natural supports that exist within your natal chart. Kevin is also sensitive to the current moment, distilling transits in an understandable and workable way. He is going to be one of the greats and has become one of my go-to&nbsp;astrologers!</p>
+            <p class="testimonial-attr">— Alex</p>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">Kevin is encyclopedic in his knowledge of astrology. You will be awed, delighted, and seen! You will learn so much and hear new things that ring true about yourself whether you're looking to book your first reading or your hundredth.</p>
+            <p class="testimonial-attr">— Lauren</p>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">Kevin has profoundly expanded my understanding of myself. Through our session, I began to feel at home with parts of myself that I had previously neglected or felt ashamed of. Kevin's guidance has liberated areas of my life that felt stuck, unclear, and unable to be expressed.</p>
+            <p class="testimonial-attr">— Rachel</p>
+          </div>
+
+        </div>
+
+        <div class="testimonial-dots" aria-label="Testimonial navigation"></div>
+      </div>
+
+      <button class="testimonial-arrow next" type="button" aria-label="Next testimonial">›</button>
+    </div>
+
   </div>
 </section>
 
@@ -1360,6 +1488,84 @@
     dots[slideIdx].classList.add('active');
   }
   function slideshowNav(dir) { slideshowGo(slideIdx + dir); }
+
+  // ── Testimonial Carousel ──
+  (function () {
+    const root = document.getElementById('testimonialCarousel');
+    if (!root) return;
+
+    const slides = Array.from(root.querySelectorAll('.testimonial-slide'));
+    const prevBtn = root.querySelector('.testimonial-arrow.prev');
+    const nextBtn = root.querySelector('.testimonial-arrow.next');
+    const dotsWrap = root.querySelector('.testimonial-dots');
+
+    if (!slides.length) return;
+
+    let idx = 0;
+    let timer = null;
+    const INTERVAL_MS = 6500;
+
+    // Build dots
+    dotsWrap.innerHTML = '';
+    const dots = slides.map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'testimonial-dot' + (i === 0 ? ' is-active' : '');
+      b.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+      b.addEventListener('click', () => {
+        go(i);
+        restart();
+      });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function render() {
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+    }
+
+    function go(n) {
+      idx = (n + slides.length) % slides.length;
+      render();
+    }
+
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    function start() {
+      stop();
+      timer = setInterval(next, INTERVAL_MS);
+    }
+
+    function stop() {
+      if (timer) clearInterval(timer);
+      timer = null;
+    }
+
+    function restart() {
+      start();
+    }
+
+    prevBtn?.addEventListener('click', () => { prev(); restart(); });
+    nextBtn?.addEventListener('click', () => { next(); restart(); });
+
+    // Pause on hover/focus
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    // Keyboard arrows when focused anywhere inside
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); restart(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); restart(); }
+    });
+
+    // Init
+    render();
+    start();
+  })();
 
   // ══════════════════════════════════════════════════════════════
   // ── SUBSTACK RSS FEED — auto-loads latest posts via RSS2JSON

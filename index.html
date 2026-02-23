@@ -646,47 +646,52 @@
   overflow: hidden;
 }
 
+/* key change: stack slides */
 .testimonial-track {
   position: relative;
+  min-height: var(--tmin, 180px); /* gets set by JS for stable height */
 }
 
 .testimonial-slide {
-  display: none;
+  position: absolute;
+  inset: 0;
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateY(10px);
+  transition:
+    opacity 900ms ease,
+    transform 900ms ease;
+  pointer-events: none;
 }
 
 .testimonial-slide.is-active {
-  display: block;
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .testimonial-arrow {
   width: 44px;
   height: 44px;
-  border-radius: 999px;
-  border: 1px solid rgba(245, 240, 232, 0.25);
-  background: rgba(245, 240, 232, 0.06);
-  color: var(--bg);
+  border: none;
+  background: transparent;
+  color: #fff;
   cursor: pointer;
   display: grid;
   place-items: center;
-  font-size: 1.6rem;
+  font-size: 2rem;
   line-height: 1;
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  opacity: 0.85;
+  transition: opacity 200ms ease, transform 200ms ease;
 }
 
 .testimonial-arrow:hover {
+  opacity: 1;
   transform: translateY(-1px);
-  background: rgba(245, 240, 232, 0.12);
-  border-color: rgba(245, 240, 232, 0.35);
 }
 
 .testimonial-arrow:active {
   transform: translateY(0);
-}
+}wal
 
 .testimonial-dots {
   display: flex;
@@ -723,7 +728,7 @@
   .testimonial-arrow {
     width: 36px;
     height: 36px;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
 }
 

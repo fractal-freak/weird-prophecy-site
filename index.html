@@ -1266,7 +1266,7 @@
       <button class="testimonial-arrow next" type="button" aria-label="Next testimonial">›</button>
     </div>
 
-    <div class="testimonial-dots" aria-label="Testimonial navigation"></div>
+    <div class="testimonial-dots" id="testimonialDots" aria-label="Testimonial navigation"></div>
 
   </div>
 </section>
@@ -1499,7 +1499,7 @@
     const slides = Array.from(root.querySelectorAll('.testimonial-slide'));
     const prevBtn = root.querySelector('.testimonial-arrow.prev');
     const nextBtn = root.querySelector('.testimonial-arrow.next');
-    const dotsWrap = root.querySelector('.testimonial-dots');
+    const dotsWrap = document.getElementById('testimonialDots');
 
     if (!slides.length) return;
 

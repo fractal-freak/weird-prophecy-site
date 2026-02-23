@@ -658,16 +658,15 @@
   opacity: 0;
   transform: translateY(10px);
   transition:
-    opacity 900ms ease,
-    transform 900ms ease;
+    opacity 450ms ease,
+    transform 450ms ease;
   pointer-events: none;
 }
 
 .testimonial-slide.is-active {
   opacity: 1;
   transform: translateY(0);
-  pointer-events: auto;
-}
+  pointer-events: auto;}
 
 .testimonial-arrow {
   width: 44px;
@@ -696,7 +695,7 @@
 .testimonial-dots {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-top: 1.25rem;
 }
 
@@ -1525,14 +1524,30 @@
       return b;
     });
 
+    const FADE_MS = 450; // must match CSS transition duration
+    let transitioning = false;
+
     function render() {
       slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
       dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
     }
 
     function go(n) {
-      idx = (n + slides.length) % slides.length;
-      render();
+      if (transitioning) return;
+      const next = (n + slides.length) % slides.length;
+      if (next === idx) return;
+      transitioning = true;
+
+      // Phase 1: fade out current slide
+      slides[idx].classList.remove('is-active');
+
+      setTimeout(() => {
+        // Phase 2: fade in next slide
+        idx = next;
+        slides[idx].classList.add('is-active');
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+        transitioning = false;
+      }, FADE_MS);
     }
 
     function next() { go(idx + 1); }

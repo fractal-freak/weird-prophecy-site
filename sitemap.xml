@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.weirdprophecy.com/</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.weirdprophecy.com/about-me.jpg</image:loc>
+      <image:title>Kevin Soares, Hellenistic Astrologer</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.weirdprophecy.com/star-logo.png</image:loc>
+      <image:title>Weird Prophecy logo</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.weirdprophecy.com/Store.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.weirdprophecy.com/spherespace1.png</image:loc>
+      <image:title>Sphere Space guide</image:title>
+    </image:image>
+  </url>
+</urlset>

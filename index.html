@@ -612,6 +612,10 @@
   position: relative;
   transition: all 0.4s;
   cursor: pointer;
+  /* Flex column so the divider + tag block can sit flush at the bottom
+     across all three cards regardless of paragraph length. */
+  display: flex;
+  flex-direction: column;
 }
 
   .service-card:hover {
@@ -657,6 +661,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* Pin to the bottom of the card so dividers align across all three. */
+    margin-top: auto;
   }
 
   .service-tag .arrow {

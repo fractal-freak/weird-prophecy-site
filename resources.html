@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — Free Astrology Tools | Kevin Soares Astrology</title>
+<meta name="description" content="Free interactive astrology resources from Kevin Soares — translate transits into the houses they activate in your chart, and more tools coming soon.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.weirdprophecy.com/resources.html">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.weirdprophecy.com/resources.html">
+<meta property="og:title" content="Resources — Kevin Soares Astrology">
+<meta property="og:description" content="Free interactive tools for working with your chart.">
+<meta property="og:image" content="https://www.weirdprophecy.com/about-me.jpg">
+<meta property="og:site_name" content="Weird Prophecy">
+
+<link rel="icon" type="image/png" href="star-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link rel="preload" as="font" href="https://fonts.gstatic.com/s/pirataone/v23/I_urMpiDvgLdLh0fAtofhi-Org.woff2" type="font/woff2" crossorigin="">
+<style>
+  @font-face {
+    font-family: 'Pirata One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url('https://fonts.gstatic.com/s/pirataone/v23/I_urMpiDvgLdLh0fAtofhi-Org.woff2') format('woff2');
+  }
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&family=JetBrains+Mono:wght@300;400&display=swap');
+</style>
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg-dark: #e8e0d0;
+    --ink: #302e2d;
+    --ink-light: #4a4238;
+    --ink-faded: #8a7e70;
+    --accent: #c44b28;
+    --accent-dark: #a03d20;
+    --parchment: #ede6d8;
+    --border: #c4b89a;
+    --cream: #faf6ee;
+    --shadow: rgba(26, 22, 18, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  p, h1, h2, h3, h4 {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+    widows: 2;
+    orphans: 2;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    background: rgba(245, 240, 232, 0.85);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.4s ease;
+  }
+
+  nav.scrolled {
+    padding: 0.8rem 2.5rem;
+    box-shadow: 0 2px 20px var(--shadow);
+  }
+
+  .nav-brand {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .nav-brand span { font-style: normal; color: var(--ink); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.2rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.65rem !important;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bg) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #fff !important;
+  }
+
+  .nav-cta::after { display: none !important; }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 28px;
+    height: 20px;
+    position: relative;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--ink);
+    position: absolute;
+    left: 0;
+    transition: all 0.3s;
+  }
+
+  .nav-toggle span:nth-child(1) { top: 0; }
+  .nav-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+  .nav-toggle span:nth-child(3) { bottom: 0; }
+
+  .nav-toggle.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2) { opacity: 0; }
+  .nav-toggle.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding: 10rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(196, 75, 40, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .page-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--ink-faded);
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 800px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .page-title em { font-style: italic; color: var(--accent); }
+
+  .page-intro {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 4rem 2rem; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--ink-faded);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .divider {
+    max-width: 1100px;
+    margin: 0 auto;
+    border: none;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+
+  .divider::after {
+    content: '✦';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    padding: 0 1rem;
+    color: var(--border);
+    font-size: 0.7rem;
+  }
+
+  /* ── RESOURCE GRID ── */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .resource-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.4s;
+    position: relative;
+  }
+
+  .resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px var(--shadow);
+    border-color: var(--accent);
+  }
+
+  .resource-card.coming-soon {
+    background: var(--parchment);
+    cursor: default;
+    opacity: 0.75;
+  }
+
+  .resource-card.coming-soon:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border);
+  }
+
+  .resource-icon {
+    font-family: 'Pirata One', cursive;
+    font-size: 3rem;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1.2rem;
+    transition: color 0.3s;
+  }
+
+  .resource-card:hover .resource-icon { color: var(--accent); }
+  .resource-card.coming-soon .resource-icon { color: var(--border); }
+
+  .resource-card h3 {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .resource-card p {
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .resource-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-faded);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .resource-tag .arrow {
+    font-size: 1rem;
+    color: var(--accent);
+    transition: transform 0.3s;
+  }
+
+  .resource-card:hover .resource-tag .arrow { transform: translateX(4px); }
+
+  .resource-card.coming-soon .resource-tag .arrow { color: var(--ink-faded); }
+
+  /* ── BOOKING ── */
+  .booking-section {
+    background: var(--parchment);
+    text-align: center;
+    padding: 6rem 2rem;
+  }
+
+  .booking-section .section-label { justify-content: center; }
+  .booking-section .section-label::before { display: none; }
+
+  .booking-text {
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    color: var(--ink-light);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .booking-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 1.2rem 3rem;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    transition: all 0.4s;
+  }
+
+  .booking-cta:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(196, 75, 40, 0.25);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1a1612;
+    color: var(--parchment);
+    padding: 4rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .footer-brand {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-desc {
+    font-size: 0.82rem;
+    color: var(--ink-faded);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faded);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col a {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--parchment);
+    text-decoration: none;
+    margin-bottom: 0.6rem;
+    transition: color 0.3s;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(196, 184, 154, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .footer-socials { display: flex; gap: 1rem; }
+  .footer-socials a {
+    color: var(--ink-faded);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-socials a:hover { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      gap: 1.2rem;
+    }
+
+    .resource-grid { grid-template-columns: 1fr; }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.2rem; }
+    section { padding: 3rem 1.2rem; }
+    .page-header { padding: 8rem 1.2rem 2rem; }
+    .booking-section { padding: 4rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav id="nav" class="scrolled">
+  <a href="index.html" class="nav-brand">Kevin <span>Soares</span></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="index.html#writings">Content</a></li>
+    <li><a href="Store.html">Store</a></li>
+    <li>
+      <a href="https://kevinsoares.as.me/" target="_blank" class="nav-cta">Book a Reading</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="page-header">
+  <div class="page-label">Free Resources</div>
+  <h1 class="page-title">Tools for working<br>with <em>your chart</em></h1>
+  <p class="page-intro">
+    These free, interactive resources are here to help you connect what you're reading about transits to the specific areas of life they are activating in your own&nbsp;chart.
+  </p>
+</header>
+
+<hr class="divider">
+
+<!-- ═══════ RESOURCES GRID ═══════ -->
+<section id="resources">
+  <div class="section-inner">
+    <div class="section-label">Available Now</div>
+    <h2 class="section-title">Pick a <em>resource</em></h2>
+
+    <div class="resource-grid">
+
+      <a href="transits.html" class="resource-card">
+        <div class="resource-icon">I</div>
+        <h3>Transit Translator</h3>
+        <p>
+          Select your rising sign and see which houses are activated when planets transit through each sign of the zodiac. This will help you understand which topics in your chart any current transit is&nbsp;activating.
+        </p>
+        <div class="resource-tag">
+          <span>Houses by Rising Sign</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <div class="resource-card coming-soon">
+        <div class="resource-icon">II</div>
+        <h3>Planet Meanings</h3>
+        <p>
+          A guide to the seven traditional planets, what each one signifies, the territory it governs, and how to recognize its presence in your chart and in your daily&nbsp;life.
+        </p>
+        <div class="resource-tag">
+          <span>Coming Soon</span>
+          <span class="arrow">✦</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════ BOOKING ═══════ -->
+<section class="booking-section">
+  <div class="section-inner">
+    <div class="section-label">Go Deeper</div>
+    <h2 class="section-title">Want a <em>full reading?</em></h2>
+    <p class="booking-text">
+      These tools give you a starting point. A consultation will take a deeper look at house rulers, sect, planetary condition, and the timing techniques that help you make the most of your current&nbsp;circumstance.
+    </p>
+    <a href="https://kevinsoares.as.me/" target="_blank" class="booking-cta">
+      Book a Consultation
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Kevin Soares</div>
+      <p class="footer-desc">Research-driven astrology in the Hellenistic tradition. Concrete predictions, specific timing, ancient&nbsp;precision.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="resources.html">Resources</a>
+      <a href="index.html#writings">Writings</a>
+      <a href="Store.html">Store</a>
+      <a href="https://kevinsoares.as.me/" target="_blank">Book a Reading</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.youtube.com/@weirdprophecy" target="_blank">YouTube</a>
+      <a href="https://fractalfreak.substack.com/" target="_blank">Substack</a>
+      <a href="https://www.instagram.com/fractal_freak/" target="_blank">Instagram</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Kevin Soares · Astrology</span>
+    <div class="footer-socials">
+      <a href="https://www.youtube.com/@weirdprophecy" target="_blank">YT</a>
+      <a href="https://fractalfreak.substack.com/" target="_blank">SS</a>
+      <a href="https://www.instagram.com/fractal_freak/" target="_blank">IG</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+
+</body></html>

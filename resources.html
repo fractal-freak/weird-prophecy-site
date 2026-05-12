@@ -302,7 +302,7 @@
   /* ── RESOURCE GRID ── */
   .resource-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
@@ -519,6 +519,10 @@
       gap: 1.2rem;
     }
 
+    .resource-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
     .resource-grid { grid-template-columns: 1fr; }
 
     .footer-inner {
@@ -587,8 +591,20 @@
         </div>
       </a>
 
-      <div class="resource-card coming-soon">
+      <a href="natal-chart.html" class="resource-card">
         <div class="resource-icon">II</div>
+        <h3>Calculate Your Chart</h3>
+        <p>
+          Enter your birth date, time, and place to see your whole-sign natal chart wheel, with planets, angles, and aspects computed right in your&nbsp;browser.
+        </p>
+        <div class="resource-tag">
+          <span>Whole-Sign Natal Chart</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <div class="resource-card coming-soon">
+        <div class="resource-icon">III</div>
         <h3>Planet Meanings</h3>
         <p>
           A guide to the seven traditional planets, what each one signifies, the territory it governs, and how to recognize its presence in your chart and in your daily&nbsp;life.

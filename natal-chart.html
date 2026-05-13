@@ -444,6 +444,13 @@
     color: var(--ink);
   }
 
+  .placement.is-angle .placement-symbol {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
   .placement-deg {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.8rem;
@@ -461,6 +468,119 @@
     color: var(--accent);
     letter-spacing: 0.05em;
     margin-left: 0.15rem;
+  }
+
+  /* ── SAVE BUTTON ── */
+  .chart-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .chart-save-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.8rem 1.6rem;
+    background: var(--ink);
+    color: var(--bg);
+    border: 1px solid var(--ink);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .chart-save-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .chart-save-btn.is-saved {
+    background: transparent;
+    color: var(--ink-faded);
+    border-color: var(--border);
+    cursor: default;
+  }
+  .chart-save-btn.is-saved:hover {
+    background: transparent;
+    border-color: var(--border);
+  }
+
+  /* ── SAVED CHARTS LIST ── */
+  .saved-charts {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .saved-charts-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-faded);
+    margin-bottom: 0.6rem;
+  }
+
+  .saved-charts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .saved-chart {
+    display: flex;
+    align-items: stretch;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+  }
+  .saved-chart:hover { border-color: var(--accent); }
+
+  .saved-chart-load {
+    flex: 1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.55rem 0.8rem;
+    text-align: left;
+    color: var(--ink);
+    font-family: inherit;
+    transition: color 0.2s;
+  }
+  .saved-chart-load:hover { color: var(--accent); }
+
+  .saved-chart-name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .saved-chart-meta {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faded);
+    margin-top: 0.15rem;
+  }
+
+  .saved-chart-delete {
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border);
+    color: var(--ink-faded);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.8rem;
+    transition: color 0.2s, background 0.2s;
+  }
+  .saved-chart-delete:hover {
+    color: var(--accent);
+    background: var(--parchment);
   }
 
   /* ── BOOKING ── */
@@ -639,7 +759,7 @@
   <div class="page-label">Resources · Natal Chart Calculator</div>
   <h1 class="page-title">Calculate <em>your chart</em></h1>
   <p class="page-intro">
-    Enter your birth date, time, and place to see your whole-sign natal chart wheel. Everything is computed in your browser, and the chart is saved on this device so you do not need to re-enter your data on future&nbsp;visits.
+    Your natal chart is a picture of the cosmos at the exact moment you were born. Enter your data below to see yours rendered as a whole-sign wheel, and click Save Chart to keep it for future&nbsp;visits.
   </p>
 </header>
 
@@ -681,6 +801,11 @@
 
         <button id="fSubmit" type="submit" class="calc-btn" disabled>Calculate Chart</button>
         <div id="fStatus" class="form-status">Loading ephemeris…</div>
+
+        <div id="savedCharts" class="saved-charts" style="display:none;">
+          <div class="saved-charts-label">Saved Charts</div>
+          <div id="savedChartsList" class="saved-charts-list"></div>
+        </div>
       </form>
 
       <!-- CHART OUTPUT -->
@@ -699,6 +824,9 @@
             <canvas id="chartCanvas"></canvas>
           </div>
           <div id="placements" class="placements"></div>
+          <div class="chart-actions">
+            <button id="saveBtn" type="button" class="chart-save-btn">Save Chart</button>
+          </div>
         </div>
       </div>
 
@@ -836,6 +964,7 @@
   ];
 
   const STORAGE_KEY = 'wp_natal_chart';
+  const SAVED_KEY = 'wp_natal_chart_saved';
 
   // ── Ephemeris (astronomy-engine, pure JS, browser-native) ──
 
@@ -1227,6 +1356,7 @@
   let locationData = null;
   let debounceTimer = null;
   let ephemReady = false;
+  let currentChart = null;
 
   function setFormValid(valid) {
     fSubmit.disabled = !valid || !ephemReady;
@@ -1325,7 +1455,9 @@
         lng: locationData?.lng ?? null,
         locationName: locationData?.name ?? fLocation.value.trim() ?? null
       });
+      currentChart = chart;
       renderChart(chart);
+      updateSaveButtonState();
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify({
         name: chart.name, date: chart.date, time: chart.time,
         lat: chart.lat, lng: chart.lng, locationName: chart.locationName
@@ -1337,6 +1469,132 @@
       fStatus.textContent = 'Calculation failed — check inputs';
     }
   }
+
+  // ── Saved charts (collection) ──
+
+  function loadSavedCharts() {
+    try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'); }
+    catch { return []; }
+  }
+
+  function writeSavedCharts(list) {
+    try { localStorage.setItem(SAVED_KEY, JSON.stringify(list)); } catch {}
+  }
+
+  function chartFingerprint(c) {
+    return `${c.name}|${c.date}|${c.time}`;
+  }
+
+  function isCurrentChartSaved() {
+    if (!currentChart) return false;
+    const fp = chartFingerprint(currentChart);
+    return loadSavedCharts().some(c => chartFingerprint(c) === fp);
+  }
+
+  function saveCurrentChart() {
+    if (!currentChart || isCurrentChartSaved()) return;
+    const list = loadSavedCharts();
+    list.push({
+      id: `chart-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      name: currentChart.name,
+      date: currentChart.date,
+      time: currentChart.time,
+      lat: currentChart.lat,
+      lng: currentChart.lng,
+      locationName: currentChart.locationName
+    });
+    writeSavedCharts(list);
+    renderSavedChartsList();
+    updateSaveButtonState();
+  }
+
+  function deleteSavedChart(id) {
+    writeSavedCharts(loadSavedCharts().filter(c => c.id !== id));
+    renderSavedChartsList();
+    updateSaveButtonState();
+  }
+
+  function loadSavedChartById(id) {
+    const chart = loadSavedCharts().find(c => c.id === id);
+    if (!chart) return;
+    fName.value = chart.name || '';
+    fDate.value = chart.date;
+    fTime.value = chart.time || '12:00';
+    if (chart.lat != null && chart.lng != null) {
+      locationData = { lat: chart.lat, lng: chart.lng, name: chart.locationName || '' };
+      fLocation.value = chart.locationName
+        ? chart.locationName.split(',').slice(0, 2).join(',')
+        : '';
+      fLocationCheck.style.display = 'inline';
+    } else {
+      locationData = null;
+      fLocation.value = chart.locationName || '';
+      fLocationCheck.style.display = 'none';
+    }
+    checkValidity();
+    runCalculation();
+  }
+
+  function renderSavedChartsList() {
+    const wrap = document.getElementById('savedCharts');
+    const list = document.getElementById('savedChartsList');
+    const saved = loadSavedCharts();
+    list.innerHTML = '';
+    if (!saved.length) {
+      wrap.style.display = 'none';
+      return;
+    }
+    wrap.style.display = 'block';
+    for (const chart of saved) {
+      const row = document.createElement('div');
+      row.className = 'saved-chart';
+
+      const load = document.createElement('button');
+      load.type = 'button';
+      load.className = 'saved-chart-load';
+      const place = chart.locationName
+        ? chart.locationName.split(',').slice(0, 2).join(',')
+        : '';
+      load.innerHTML = `
+        <span class="saved-chart-name"></span>
+        <span class="saved-chart-meta"></span>
+      `;
+      load.querySelector('.saved-chart-name').textContent = chart.name || 'Chart';
+      load.querySelector('.saved-chart-meta').textContent =
+        [chart.date, place].filter(Boolean).join(' · ');
+      load.addEventListener('click', () => loadSavedChartById(chart.id));
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'saved-chart-delete';
+      del.setAttribute('aria-label', `Delete ${chart.name || 'chart'}`);
+      del.textContent = '×';
+      del.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteSavedChart(chart.id);
+      });
+
+      row.appendChild(load);
+      row.appendChild(del);
+      list.appendChild(row);
+    }
+  }
+
+  function updateSaveButtonState() {
+    const btn = document.getElementById('saveBtn');
+    if (!btn) return;
+    if (isCurrentChartSaved()) {
+      btn.textContent = 'Saved';
+      btn.classList.add('is-saved');
+      btn.disabled = true;
+    } else {
+      btn.textContent = 'Save Chart';
+      btn.classList.remove('is-saved');
+      btn.disabled = false;
+    }
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', saveCurrentChart);
 
   function renderChart(chart) {
     chartEmpty.style.display = 'none';
@@ -1357,8 +1615,10 @@
     placementsEl.innerHTML = '';
     const rows = [];
     if (chart.angles) {
-      rows.push({ id: 'AC',  symbol: 'AC', lng: chart.angles.Asc, color: '#000' });
-      rows.push({ id: 'MC',  symbol: 'MC', lng: chart.angles.MC,  color: '#000' });
+      rows.push({ id: 'AC', symbol: 'AC', lng: chart.angles.Asc, color: '#000', isAngle: true });
+      rows.push({ id: 'DC', symbol: 'DC', lng: chart.angles.Dsc, color: '#000', isAngle: true });
+      rows.push({ id: 'MC', symbol: 'MC', lng: chart.angles.MC,  color: '#000', isAngle: true });
+      rows.push({ id: 'IC', symbol: 'IC', lng: chart.angles.IC,  color: '#000', isAngle: true });
     }
     for (const p of PLANETS) {
       const lng = chart.positions[p.id];
@@ -1372,7 +1632,7 @@
       const min = Math.floor((inSign - deg) * 60);
       const sign = ZODIAC_SIGNS[signIdx];
       const el = document.createElement('div');
-      el.className = 'placement';
+      el.className = 'placement' + (r.isAngle ? ' is-angle' : '');
       el.innerHTML = `
         <span class="placement-symbol" style="color:${r.color}">${r.symbol}</span>
         <span class="placement-deg">${deg}°${String(min).padStart(2, '0')}'</span>
@@ -1390,6 +1650,7 @@
       ephemReady = true;
       fStatus.textContent = '';
       checkValidity();
+      renderSavedChartsList();
 
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;

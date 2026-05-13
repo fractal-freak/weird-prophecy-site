@@ -421,55 +421,6 @@
     height: auto;
   }
 
-  .placements {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 0.4rem 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .placement {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    color: var(--ink-light);
-  }
-
-  .placement-symbol {
-    width: 1.2rem;
-    text-align: center;
-    font-size: 1.05rem;
-    color: var(--ink);
-  }
-
-  .placement.is-angle .placement-symbol {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
-  .placement-deg {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--ink);
-  }
-
-  .placement-sign {
-    font-size: 1rem;
-    color: var(--ink);
-  }
-
-  .placement-retro {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-    margin-left: 0.15rem;
-  }
-
   /* ── SAVE BUTTON ── */
   .chart-actions {
     display: flex;
@@ -739,7 +690,6 @@
           <div class="chart-wheel-wrap">
             <canvas id="chartCanvas"></canvas>
           </div>
-          <div id="placements" class="placements"></div>
           <div class="chart-actions">
             <button id="saveBtn" type="button" class="chart-save-btn">Save Chart</button>
           </div>
@@ -1260,7 +1210,6 @@
   const chartName = document.getElementById('chartName');
   const chartMetaInfo = document.getElementById('chartMetaInfo');
   const chartCanvas = document.getElementById('chartCanvas');
-  const placementsEl = document.getElementById('placements');
 
   let locationData = null;
   let debounceTimer = null;
@@ -1389,17 +1338,71 @@
       .replace(/\s+/g, '-') || 'chart';
   }
 
-  function downloadChartImage() {
+  async function downloadChartImage() {
     if (!currentChart) return;
+    // Make sure custom fonts are loaded before rendering text onto the canvas.
+    try { await document.fonts.ready; } catch {}
+
     const src = document.getElementById('chartCanvas');
-    // Composite onto a cream-filled canvas so the PNG isn't transparent.
+    const dpr = window.devicePixelRatio || 1;
+    const wheelSize = src.width / dpr;
+
+    const padX = 44;
+    const padTop = 40;
+    const padBottom = 40;
+    const nameSize = 34;
+    const metaSize = 11;
+    const nameToMeta = 8;
+    const metaToDivider = 18;
+    const dividerToWheel = 22;
+
+    const totalW = wheelSize + padX * 2;
+    const totalH = padTop + nameSize + nameToMeta + metaSize + metaToDivider + 1
+                 + dividerToWheel + wheelSize + padBottom;
+
     const out = document.createElement('canvas');
-    out.width = src.width;
-    out.height = src.height;
+    out.width = totalW * dpr;
+    out.height = totalH * dpr;
     const ctx = out.getContext('2d');
-    ctx.fillStyle = '#faf6ee'; // var(--cream)
-    ctx.fillRect(0, 0, out.width, out.height);
-    ctx.drawImage(src, 0, 0);
+    ctx.scale(dpr, dpr);
+
+    // Cream background to match the page
+    ctx.fillStyle = '#faf6ee';
+    ctx.fillRect(0, 0, totalW, totalH);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+
+    // Name — Pirata One, large
+    ctx.fillStyle = '#302e2d';
+    ctx.font = `400 ${nameSize}px "Pirata One", serif`;
+    ctx.fillText(currentChart.name || 'Chart', totalW / 2, padTop);
+
+    // Meta — date · time · location, JetBrains Mono uppercase
+    const place = currentChart.locationName
+      ? currentChart.locationName.split(',').slice(0, 2).join(',').trim()
+      : '';
+    const metaText = [currentChart.date, currentChart.time, place]
+      .filter(Boolean).join(' · ').toUpperCase();
+    const metaY = padTop + nameSize + nameToMeta;
+    ctx.fillStyle = '#8a7e70';
+    ctx.font = `300 ${metaSize}px "JetBrains Mono", monospace`;
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '1.3px';
+    ctx.fillText(metaText, totalW / 2, metaY);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+
+    // Divider
+    const dividerY = metaY + metaSize + metaToDivider;
+    ctx.strokeStyle = '#c4b89a';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padX, dividerY + 0.5);
+    ctx.lineTo(totalW - padX, dividerY + 0.5);
+    ctx.stroke();
+
+    // Wheel
+    const wheelY = dividerY + 1 + dividerToWheel;
+    ctx.drawImage(src, padX, wheelY, wheelSize, wheelSize);
 
     const link = document.createElement('a');
     link.download = `${safeFilename(currentChart.name)}-${currentChart.date}.png`;
@@ -1422,39 +1425,6 @@
       chartMetaInfo.textContent += ' · No location (Asc/houses unavailable)';
     }
     drawWheel(chartCanvas, chart, 500);
-    renderPlacements(chart);
-  }
-
-  function renderPlacements(chart) {
-    placementsEl.innerHTML = '';
-    const rows = [];
-    if (chart.angles) {
-      rows.push({ id: 'AC', symbol: 'AC', lng: chart.angles.Asc, color: '#000', isAngle: true });
-      rows.push({ id: 'DC', symbol: 'DC', lng: chart.angles.Dsc, color: '#000', isAngle: true });
-      rows.push({ id: 'MC', symbol: 'MC', lng: chart.angles.MC,  color: '#000', isAngle: true });
-      rows.push({ id: 'IC', symbol: 'IC', lng: chart.angles.IC,  color: '#000', isAngle: true });
-    }
-    for (const p of PLANETS) {
-      const lng = chart.positions[p.id];
-      const speed = chart.speeds[p.id];
-      rows.push({ id: p.id, symbol: p.symbol, lng, color: p.color, retro: speed < 0 && !NON_RETROGRADE.has(p.id) });
-    }
-    for (const r of rows) {
-      const signIdx = Math.floor(((r.lng % 360) + 360) % 360 / 30);
-      const inSign = r.lng - signIdx * 30;
-      const deg = Math.floor(inSign);
-      const min = Math.floor((inSign - deg) * 60);
-      const sign = ZODIAC_SIGNS[signIdx];
-      const el = document.createElement('div');
-      el.className = 'placement' + (r.isAngle ? ' is-angle' : '');
-      el.innerHTML = `
-        <span class="placement-symbol" style="color:${r.color}">${r.symbol}</span>
-        <span class="placement-deg">${deg}°${String(min).padStart(2, '0')}'</span>
-        <span class="placement-sign">${sign.symbol}</span>
-        ${r.retro ? '<span class="placement-retro">R</span>' : ''}
-      `;
-      placementsEl.appendChild(el);
-    }
   }
 
   // ── Restore saved chart on load ──

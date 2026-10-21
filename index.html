@@ -1519,19 +1519,37 @@
           <!-- Slide 1 -->
           <div class="testimonial-slide is-active">
             <p class="testimonial-quote">Kevin's understanding and knowledge of astrology is felt and embodied. You can tell the language flows through him naturally, showcasing his absolute love for the art. His chart delineations are precise, highlighting natural supports that exist within your natal chart. Kevin is also sensitive to the current moment, distilling transits in an understandable and workable way.</p>
-            <p class="testimonial-attr">— Alex</p>
+            <p class="testimonial-attr">Alex</p>
           </div>
 
           <!-- Slide 2 -->
           <div class="testimonial-slide">
             <p class="testimonial-quote">Kevin is encyclopedic in his knowledge of astrology. You will be awed, delighted, and seen! You will learn so much and hear new things that ring true about yourself whether you're looking to book your first reading or your hundredth.</p>
-            <p class="testimonial-attr">— Lauren</p>
+            <p class="testimonial-attr">Lauren</p>
           </div>
 
           <!-- Slide 3 -->
           <div class="testimonial-slide">
             <p class="testimonial-quote">Kevin has profoundly expanded my understanding of myself. Through our session, I began to feel at home with parts of myself that I had previously neglected or felt ashamed of. Kevin's guidance has liberated areas of my life that felt stuck, unclear, and unable to be expressed.</p>
-            <p class="testimonial-attr">— Rachel</p>
+            <p class="testimonial-attr">Rachel</p>
+          </div>
+
+          <!-- Slide 4 (Trustpilot, May 2026) -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">Kevin has a deep passion for astrology and the knowledge to match. He has a command of the subject in a way that really resonates. He's always ready to expand on his readings, able to connect the dots amongst the planets with things I share that makes the experience very fluid and fulfilling. Kevin is my go-to astrologer!</p>
+            <p class="testimonial-attr">Yalda</p>
+          </div>
+
+          <!-- Slide 5 (Trustpilot, June 2026, shortened from the full review) -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">He was very accurate in his description of me based on my chart, which made me confident in trusting the information he provided to make changes in my life&hellip; He gave me exact dates as targets or the best time for certain things that I have had difficulty in achieving&hellip; Kevin really was a joy to work with and is the real deal!</p>
+            <p class="testimonial-attr">Tootles</p>
+          </div>
+
+          <!-- Slide 6 (Trustpilot, October 2026) -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">Kevin is an Astro Wizard! Bringing new perspective, down to earth and direct connections to complex astrological questions. I highly recommend.</p>
+            <p class="testimonial-attr">Rachelle</p>
           </div>
 
         </div>
@@ -1804,6 +1822,17 @@
     const dotsWrap = document.getElementById('testimonialDots');
 
     if (!slides.length) return;
+
+    // Size the strip to its tallest review so a long one is never cut off
+    const track = root.querySelector('.testimonial-track');
+    function fitHeight() {
+      track.style.setProperty('--tmin', '0px');
+      const tallest = Math.max(180, ...slides.map((s) => s.scrollHeight));
+      track.style.setProperty('--tmin', tallest + 'px');
+    }
+    fitHeight();
+    window.addEventListener('resize', fitHeight);
+    document.fonts?.ready.then(fitHeight);
 
     let idx = 0;
     let timer = null;
